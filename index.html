@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>O Menu Restaurant — Brazzaville</title>
+
+  <!-- Google Analytics GA4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-389830792"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-389830792');
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,900;1,300&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+/* ── RESET ── */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  font-family:'Montserrat',sans-serif;
+  background:#111010;
+  color:#FAF6F0;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+:root {
+  --or:    #E8621A;
+  --bg:    #111010;
+  --card:  #1a1714;
+  --card2: #201d18;
+  --brd:   #2a2520;
+  --gray:  #7a7068;
+  --lgray: #4a4540;
+  --cream: #FAF6F0;
+  --green: #25D366;
+}
+
+/* ══ HEADER ══ */
+.site-header {
+  background: var(--card);
+  border-bottom: 1px solid var(--brd);
+  padding: 52px 20px 48px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.site-header::before {
+  content:'';
+  position:absolute; top:-100px; left:50%; transform:translateX(-50%);
+  width:600px; height:600px;
+  background:radial-gradient(circle, rgba(232,98,26,.08) 0%, transparent 65%);
+  pointer-events:none;
+}
+.h-name {
+  font-size: clamp(28px,7vw,54px);
+  font-weight:900; text-transform:uppercase;
+  color: var(--or); letter-spacing:-1px; line-height:1.05;
+  position:relative; z-index:1;
+}
+.h-tag {
+  font-size:10px; letter-spacing:4px; text-transform:uppercase;
+  color:var(--gray); margin-top:10px;
+  position:relative; z-index:1;
+}
+.h-sep { width:36px; height:1px; background:var(--brd); margin:22px auto; position:relative; z-index:1; }
+.h-intro {
+  max-width:560px; margin:0 auto;
+  font-size:14px; font-weight:400; line-height:1.9;
+  color:var(--gray); position:relative; z-index:1;
+}
+.h-intro strong { color:var(--cream); font-weight:600; }
+.h-intro em { display:block; margin-top:12px; font-style:italic; font-size:13px; color:rgba(250,246,240,.45); }
+.h-cta { margin-top:28px; position:relative; z-index:1; }
+
+/* WhatsApp btn */
+.wa-btn {
+  display:inline-flex; align-items:center; gap:9px;
+  background:var(--green); color:#fff;
+  font-family:'Montserrat',sans-serif;
+  font-weight:700; font-size:12px; letter-spacing:.5px;
+  padding:12px 26px; border-radius:60px; text-decoration:none;
+  position:relative; overflow:hidden;
+  transition:transform .2s, box-shadow .2s;
+  box-shadow:0 4px 16px rgba(37,211,102,.22),
+             0 0 0 0 rgba(255,255,255,0);
+  animation: wa-pulse 2.8s ease-in-out infinite;
+}
+
+/* Lueur blanche qui balaye le bouton */
+.wa-btn::before {
+  content:'';
+  position:absolute;
+  top:-50%; left:-80%;
+  width:60%; height:200%;
+  background: linear-gradient(
+    105deg,
+    transparent 30%,
+    rgba(255,255,255,0.45) 50%,
+    transparent 70%
+  );
+  transform: skewX(-15deg);
+  animation: wa-shine 2.8s ease-in-out infinite;
+  pointer-events:none;
+}
+
+@keyframes wa-shine {
+  0%   { left:-80%; opacity:0; }
+  30%  { opacity:1; }
+  60%  { left:120%; opacity:0; }
+  100% { left:120%; opacity:0; }
+}
+
+@keyframes wa-pulse {
+  0%,100% { box-shadow: 0 4px 16px rgba(37,211,102,.25), 0 0 0 0 rgba(37,211,102,.35); }
+  50%      { box-shadow: 0 4px 24px rgba(37,211,102,.4),  0 0 0 8px rgba(37,211,102,0); }
+}
+
+.wa-btn:hover {
+  transform:translateY(-2px);
+  box-shadow:0 10px 28px rgba(37,211,102,.45), 0 0 20px rgba(255,255,255,.15);
+}
+.wa-btn svg { width:18px; height:18px; fill:#fff; flex-shrink:0; position:relative; z-index:1; }
+.wa-btn span, .wa-btn > *:not(svg) { position:relative; z-index:1; }
+.wa-btn.lg { font-size:14px; padding:15px 32px; }
+
+/* ══ NAV ══ */
+.site-nav {
+  position:sticky; top:0; z-index:500;
+  background:var(--bg);
+  border-bottom:1px solid var(--brd);
+  display:flex; overflow-x:auto; overflow-y:visible;
+  scrollbar-width:none; height:46px;
+}
+.site-nav::-webkit-scrollbar { display:none; }
+.site-nav a {
+  flex-shrink:0; display:flex; align-items:center;
+  padding:0 15px;
+  font-size:10px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase;
+  color:var(--gray); text-decoration:none; white-space:nowrap;
+  border-bottom:2px solid transparent;
+  transition:color .2s, border-color .2s;
+}
+.site-nav a:hover { color:var(--cream); }
+.site-nav a.active { color:var(--or); border-bottom-color:var(--or); }
+
+/* ══ MAIN ══ */
+.site-main { max-width:800px; margin:0 auto; padding:0 16px 80px; }
+.menu-section { padding-top:56px; }
+
+.sec-hd { display:flex; align-items:center; gap:14px; margin-bottom:22px; }
+.sec-hd h2 { font-size:18px; font-weight:900; text-transform:uppercase; letter-spacing:1.5px; color:#fff; white-space:nowrap; }
+.sec-hd .dot { width:6px; height:6px; border-radius:50%; background:var(--or); flex-shrink:0; }
+.sec-hd .ln { flex:1; height:1px; background:var(--brd); }
+
+.sub-lbl {
+  font-size:10px; font-weight:700; letter-spacing:2.5px; text-transform:uppercase;
+  color:var(--gray); margin:20px 0 12px; padding-left:2px;
+}
+.sub-lbl.accent { color:var(--or); }
+
+/* ── GRID ── */
+.grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+@media(max-width:480px) { .grid { grid-template-columns:1fr; } }
+
+.card {
+  background:var(--card2); border:1px solid var(--brd);
+  border-radius:10px; padding:15px;
+  transition:border-color .2s, transform .15s;
+}
+.card:hover { border-color:var(--lgray); transform:translateY(-1px); }
+.card .nm { font-size:13px; font-weight:600; color:var(--cream); line-height:1.3; margin-bottom:5px; }
+.card .ds { font-size:11px; color:var(--gray); line-height:1.55; margin-bottom:10px; font-weight:300; }
+.card .pr { font-size:14px; font-weight:700; color:var(--or); }
+
+.card.wide { grid-column:span 2; background:var(--card); border-color:#2e2a24; }
+@media(max-width:480px) { .card.wide { grid-column:span 1; } }
+.card.wide .nm { font-size:14px; }
+
+.card.sig {
+  grid-column:span 2; background:var(--card);
+  border:1px solid #38301e; border-left:3px solid var(--or);
+  padding:17px 17px 17px 20px;
+}
+@media(max-width:480px) { .card.sig { grid-column:span 1; } }
+.card.sig .nm { font-size:15px; color:#fff; }
+.card.sig .pr { font-size:15px; }
+
+.bdg {
+  display:inline-block; font-size:9px; font-weight:700;
+  letter-spacing:1px; text-transform:uppercase;
+  padding:3px 8px; border-radius:4px; margin-bottom:8px;
+}
+.bdg.or  { background:var(--or); color:#fff; }
+.bdg.dk  { background:var(--brd); color:var(--gray); }
+.bdg.ol  { border:1px solid var(--or); color:var(--or); background:transparent; }
+
+/* Retour à la ligne mobile uniquement */
+.mobile-br { display:none; }
+@media(max-width:480px) { .mobile-br { display:block; } }
+.slist { display:flex; flex-direction:column; gap:8px; }
+.srow {
+  display:flex; justify-content:space-between; align-items:center;
+  padding:11px 16px; gap:12px;
+  background:var(--card2); border:1px solid var(--brd); border-radius:8px;
+  transition:border-color .2s;
+}
+.srow:hover { border-color:var(--lgray); }
+.srow .nm { font-size:13px; font-weight:400; color:var(--cream); }
+.srow .pr { font-size:13px; font-weight:600; color:var(--or); white-space:nowrap; }
+
+/* ══════════════════════════════
+   FOOTER
+══════════════════════════════ */
+.site-footer {
+  background: var(--card);
+  border-top: 1px solid var(--brd);
+  padding: 64px 24px 48px;
+  text-align: center;
+}
+
+/* Nom + sous-titre */
+.ft-brand { margin-bottom: 36px; }
+.ft-brand .name {
+  font-size:26px; font-weight:900; text-transform:uppercase;
+  letter-spacing:1px; color:var(--or);
+}
+.ft-brand .sub {
+  font-size:10px; letter-spacing:3.5px; text-transform:uppercase;
+  color:var(--gray); margin-top:6px;
+}
+
+/* Séparateur */
+.ft-sep { width:40px; height:1px; background:var(--brd); margin:0 auto 36px; }
+
+/* Grande citation */
+.ft-vision {
+  max-width:540px; margin:0 auto 44px;
+  padding:28px 16px;
+  border-top:1px solid var(--brd);
+  border-bottom:1px solid var(--brd);
+}
+.ft-vision .v-title {
+  font-size:17px; font-weight:700; color:var(--cream);
+  line-height:1.5; margin-bottom:16px;
+}
+.ft-vision .v-title span { color:var(--or); }
+.ft-vision p {
+  font-size:13px; font-weight:300; font-style:italic;
+  color:var(--gray); line-height:1.9; margin-bottom:10px;
+}
+.ft-vision p:last-of-type { margin-bottom:0; }
+.ft-vision .v-slogan {
+  margin-top:22px; padding-top:18px;
+  border-top:1px solid var(--brd);
+}
+.ft-vision .v-slogan .s1 {
+  font-size:15px; font-weight:700; color:var(--cream); letter-spacing:.5px;
+}
+.ft-vision .v-slogan .s2 {
+  font-size:12px; font-weight:500; color:var(--or);
+  letter-spacing:1px; margin-top:4px; font-style:italic;
+}
+
+/* Infos grid — 3 colonnes */
+.ft-info {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:1px;
+  background:var(--brd);
+  border:1px solid var(--brd);
+  border-radius:12px;
+  overflow:hidden;
+  max-width:680px;
+  margin:0 auto 36px;
+  text-align:left;
+}
+@media(max-width:560px) { .ft-info { grid-template-columns:1fr; } }
+
+.ft-col {
+  background:var(--bg);
+  padding:22px 20px;
+}
+.ft-col .col-icon { font-size:20px; margin-bottom:10px; display:block; }
+.ft-col .col-title {
+  font-size:10px; font-weight:700; letter-spacing:2px; text-transform:uppercase;
+  color:var(--or); margin-bottom:10px; display:block;
+}
+.ft-col p { font-size:12px; color:var(--gray); line-height:1.8; }
+.ft-col a { color:var(--cream); text-decoration:none; font-weight:600; }
+.ft-col a:hover { color:var(--or); }
+.ft-col .highlight {
+  display:inline-block; margin-top:8px;
+  background: rgba(232,98,26,.1);
+  border:1px solid var(--or);
+  border-radius:6px; padding:5px 10px;
+  font-size:11px; font-weight:700; color:var(--or); letter-spacing:.5px;
+}
+.ft-col .ref-addr {
+  font-size:11px; color:var(--lgray); font-style:italic; margin-top:6px; display:block;
+}
+
+/* WhatsApp section */
+.ft-wa-block {
+  background:var(--bg);
+  border:1px solid var(--brd);
+  border-radius:12px;
+  padding:28px 20px;
+  max-width:480px; margin:0 auto 36px;
+}
+.ft-wa-block .wa-title {
+  font-size:16px; font-weight:700; color:var(--cream); margin-bottom:6px;
+}
+.ft-wa-block .wa-sub {
+  font-size:12px; color:var(--gray); margin-bottom:20px; line-height:1.6;
+}
+
+/* QR section */
+.ft-qr-block {
+  max-width:480px; margin:0 auto 40px;
+  display:flex; align-items:center; gap:24px;
+  background:var(--bg); border:1px solid var(--brd);
+  border-radius:12px; padding:24px 24px;
+  text-align:left;
+}
+@media(max-width:480px) {
+  .ft-qr-block { flex-direction:column; text-align:center; }
+}
+.qr-wrap { background:#fff; padding:10px; border-radius:8px; flex-shrink:0; }
+.ft-qr-block .qr-text h3 {
+  font-size:13px; font-weight:700; color:#fff; margin-bottom:6px;
+}
+.ft-qr-block .qr-text p {
+  font-size:12px; color:var(--gray); line-height:1.7; font-weight:300;
+}
+.ft-qr-block .qr-text strong { color:var(--cream); font-weight:600; }
+
+/* Copyright */
+.ft-copy {
+  font-size:10px; letter-spacing:1px; color:#333030; margin-top:8px;
+}
+</style>
+</head>
+<body>
+
+<!-- ══ HEADER ══ -->
+<header class="site-header">
+  <h1 class="h-name">O Menu Restaurant<br>Brazzaville</h1>
+  <p class="h-tag">✦ Cuisine Afro-Urbaine ✦</p>
+  <div class="h-sep"></div>
+  <div class="h-intro">
+    Bienvenue là où <strong>la cuisine africaine rencontre l'âme urbaine.</strong><br>
+    Chez O Menu, vous n'êtes pas un simple client — <strong>vous êtes le Boss.</strong>
+    <em>Chaque plat préparé avec amour, chaque saveur pour vous emporter dans un voyage culinaire unique.</em>
+  </div>
+  <div class="h-cta">
+    <a href="https://wa.me/242067737037?text=Bonjour%20O%20Menu%20Restaurant%20Brazzaville%2C%20je%20souhaite%20commander%20un%20plat."
+       class="wa-btn" target="_blank" rel="noopener"
+       onclick="gtag('event','click_whatsapp',{'event_category':'engagement','event_label':'bouton_header'});">
+      <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Commander sur WhatsApp
+    </a>
+  </div>
+</header>
+
+<!-- ══ NAV ══ -->
+<nav class="site-nav" id="sitenav">
+  <a href="#sandwichs"  class="nav-link">Sandwichs</a>
+  <a href="#pizzas"     class="nav-link">Pizzas</a>
+  <a href="#spaghetti"  class="nav-link">Spaghetti</a>
+  <a href="#tacos"      class="nav-link">Tacos</a>
+  <a href="#chawarma"   class="nav-link">Chawarma</a>
+  <a href="#burgers"    class="nav-link">Burgers</a>
+  <a href="#africains"  class="nav-link">Plats Africains</a>
+  <a href="#boissons"   class="nav-link">Boissons</a>
+</nav>
+
+<!-- ══ MAIN ══ -->
+<main class="site-main">
+
+  <!-- SANDWICHS -->
+  <section class="menu-section" id="sandwichs">
+    <div class="sec-hd"><div class="dot"></div><h2>Sandwichs</h2><div class="ln"></div></div>
+    <div class="grid">
+      <div class="card"><div class="nm">Sandwich</div><div class="pr">500 / 1 000 / 2 000 Cfa</div></div>
+      <div class="card"><div class="nm">Pain viande hachée</div><div class="pr">500 / 1 000 / 2 000 Cfa</div></div>
+    </div>
+  </section>
+
+  <!-- PIZZAS -->
+  <section class="menu-section" id="pizzas">
+    <div class="sec-hd"><div class="dot"></div><h2>Pizzas</h2><div class="ln"></div></div>
+    <div class="grid">
+      <div class="card sig">
+        <span class="bdg or">⭐ Signature</span>
+        <div class="nm">Pizza O Menu Blanche</div>
+        <div class="ds">Crème fraîche, viande hachée poulet, herbe de province, basilic, fromage mozzarella</div>
+        <div class="pr">8 000 Cfa</div>
+      </div>
+      <div class="card sig">
+        <span class="bdg or">⭐ Signature</span>
+        <div class="nm">Pizza au Poulet</div>
+        <div class="ds">Sauce tomate, poulet, oignon, fromage mozzarella, herbe de province, poivron vert</div>
+        <div class="pr">5 000 Cfa</div>
+      </div>
+      <div class="card"><div class="nm">Pizza Margherita</div><div class="ds">Sauce tomate, basilic frais, fromage mozzarella, olive noir</div><div class="pr">2 500 Cfa</div></div>
+      <div class="card"><div class="nm">Pizza Végétarienne</div><div class="ds">Carotte, haricot vert, sauce tomate, olive noir</div><div class="pr">3 500 Cfa</div></div>
+      <div class="card"><div class="nm">Pizza Napolitaine</div><div class="ds">Sauce tomate, anchois, fromage, mozzarella, origan (au choix)</div><div class="pr">4 500 Cfa</div></div>
+      <div class="card"><div class="nm">Pizza Américaine</div><div class="ds">Sauce tomate, viande hachée, poivron vert, mozzarella</div><div class="pr">5 000 Cfa</div></div>
+      <div class="card"><div class="nm">Pizza Jambon</div><div class="ds">Sauce tomate, jambon, fromage mozzarella, origan, olive noir</div><div class="pr">6 000 Cfa</div></div>
+      <div class="card"><div class="nm">Pizza Chorizo</div><div class="ds">Sauce tomate, chorizo, mozzarella, herbe de province</div><div class="pr">8 000 Cfa</div></div>
+      <div class="card wide"><span class="bdg ol">Au choix du client</span><div class="nm">Pizza O Menu G</div><div class="ds">La garniture entièrement au choix du client</div><div class="pr">10 000 Cfa</div></div>
+      <div class="card wide"><span class="bdg dk">À partager</span><div class="nm">O Menu Magistrale</div><div class="ds">Pizza géante à partager en famille ou entre amis — composition au choix</div><div class="pr">12 000 Cfa</div></div>
+    </div>
+  </section>
+
+  <!-- SPAGHETTI -->
+  <section class="menu-section" id="spaghetti">
+    <div class="sec-hd"><div class="dot"></div><h2>Spaghetti</h2><div class="ln"></div></div>
+    <div class="grid">
+      <div class="card"><div class="nm">Spaghetti Napolitaine</div><div class="pr">2 500 Cfa</div></div>
+      <div class="card"><div class="nm">Spaghetti poulet effiloché</div><div class="pr">2 500 Cfa</div></div>
+      <div class="card"><div class="nm">Spaghetti viande hachée</div><div class="pr">3 500 Cfa</div></div>
+      <div class="card"><div class="nm">Spaghetti Carbonara</div><div class="pr">5 000 Cfa</div></div>
+      <div class="card wide"><span class="bdg or">Incontournable</span><div class="nm">Spaghetti Bolognaise</div><div class="pr">5 000 Cfa</div></div>
+    </div>
+  </section>
+
+  <!-- TACOS -->
+  <section class="menu-section" id="tacos">
+    <div class="sec-hd"><div class="dot"></div><h2>Tacos</h2><div class="ln"></div></div>
+    <p class="sub-lbl">Viande &amp; Poulet</p>
+    <div class="grid">
+      <div class="card"><div class="nm">Tacos S</div><div class="pr">3 500 Cfa</div></div>
+      <div class="card"><div class="nm">Tacos M</div><div class="pr">5 000 Cfa</div></div>
+      <div class="card"><div class="nm">Tacos L</div><div class="pr">8 000 Cfa</div></div>
+      <div class="card"><div class="nm">Tacos Extrême — 1 Kilo</div><div class="pr">12 000 Cfa</div></div>
+      <div class="card wide"><span class="bdg or">Combo</span><div class="nm">Combo Tacos — Frite + Jus</div><div class="pr">6 000 Cfa</div></div>
+    </div>
+  </section>
+
+  <!-- CHAWARMA -->
+  <section class="menu-section" id="chawarma">
+    <div class="sec-hd"><div class="dot"></div><h2>Chawarma</h2><div class="ln"></div></div>
+    <p class="sub-lbl">Au Poulet</p>
+    <div class="grid">
+      <div class="card"><div class="nm">Taille M</div><div class="pr">2 000 Cfa</div></div>
+      <div class="card"><div class="nm">Taille L</div><div class="pr">3 000 Cfa</div></div>
+      <div class="card"><div class="nm">Taille XL</div><div class="pr">4 000 Cfa</div></div>
+      <div class="card wide"><span class="bdg or">Combo</span><div class="nm">Combo Chawarma Poulet — Frite + Sauce + Jus</div><div class="pr">5 000 Cfa</div></div>
+    </div>
+    <p class="sub-lbl">À la Viande</p>
+    <div class="grid">
+      <div class="card"><div class="nm">Taille M</div><div class="pr">2 500 Cfa</div></div>
+      <div class="card"><div class="nm">Taille L</div><div class="pr">3 500 Cfa</div></div>
+      <div class="card"><div class="nm">Taille XL</div><div class="pr">6 000 Cfa</div></div>
+      <div class="card wide"><span class="bdg or">Combo</span><div class="nm">Combo Chawarma Viande — Frite + Sauce + Jus</div><div class="pr">5 000 Cfa</div></div>
+    </div>
+  </section>
+
+  <!-- BURGERS -->
+  <section class="menu-section" id="burgers">
+    <div class="sec-hd"><div class="dot"></div><h2>Burgers</h2><div class="ln"></div></div>
+    <div class="grid">
+      <div class="card"><div class="nm">Classic Cheese Burger</div><div class="pr">3 500 Cfa</div></div>
+      <div class="card"><div class="nm">Royal Burger</div><div class="pr">4 000 Cfa</div></div>
+      <div class="card"><div class="nm">Bacon Burger</div><div class="pr">5 000 Cfa</div></div>
+      <div class="card"><div class="nm">Burger Double Cheese + Frite</div><div class="pr">6 000 Cfa</div></div>
+      <div class="card sig"><span class="bdg or">⭐ Signature</span><div class="nm">Burger Ubuntu</div><div class="ds">Le plus généreux — garniture XXL façon O Menu</div><div class="pr">8 000 Cfa</div></div>
+      <div class="card wide"><span class="bdg or">Combo</span><div class="nm">Combo Burger O Menu — Burger + Frite + Sauce + Jus</div><div class="pr">5 000 Cfa</div></div>
+    </div>
+  </section>
+
+  <!-- PLATS AFRICAINS -->
+  <section class="menu-section" id="africains">
+    <div class="sec-hd"><div class="dot"></div><h2>Plats Africains</h2><div class="ln"></div></div>
+
+    <p class="sub-lbl accent">✦ Spécialités Signature</p>
+    <div class="grid">
+      <div class="card sig"><span class="bdg or">⭐ Signature</span><div class="nm">Poulet Mayo — Le Vrai</div><div class="ds">Sans accompagnement</div><div class="pr">3 000 Cfa</div></div>
+      <div class="card sig"><span class="bdg or">⭐ Signature</span><div class="nm">Poulet Mayo — Avec accompagnement</div><div class="ds">Servi avec accompagnement au choix</div><div class="pr">4 500 Cfa</div></div>
+      <div class="card sig"><span class="bdg dk">Formule Spéciale</span><div class="nm">Poulet Mayo Spécial</div><div class="ds">Accompagnement complet inclus</div><div class="pr">8 500 Cfa</div></div>
+      <div class="card sig"><span class="bdg or">⭐ Signature</span><div class="nm">Porc Braisé O Menu</div><div class="ds">Notre porc braisé façon maison</div><div class="pr">5 000 Cfa</div></div>
+      <div class="card sig"><span class="bdg or">Pièce Maîtresse</span><div class="nm">Mouton façon O Menu</div><div class="ds">Notre plat emblématique</div><div class="pr">8 000 Cfa</div></div>
+    </div>
+
+    <p class="sub-lbl" style="margin-top:26px">Grillades &amp; Braisés</p>
+    <div class="grid">
+      <div class="card"><div class="nm">Ailes braisées</div><div class="pr">2 500 Cfa</div></div>
+      <div class="card"><div class="nm">Cuisse braisée</div><div class="pr">2 500 Cfa</div></div>
+      <div class="card"><div class="nm">Brochette de poulet</div><div class="pr">4 500 Cfa</div></div>
+      <div class="card"><div class="nm">Brochette de bœuf</div><div class="pr">7 000 Cfa</div></div>
+    </div>
+
+    <p class="sub-lbl" style="margin-top:18px">Plats en Sauce</p>
+    <div class="grid">
+      <div class="card"><div class="nm">Poulet DG</div><div class="pr">5 000 Cfa</div></div>
+      <div class="card"><div class="nm">Poulet Yassa</div><div class="pr">4 500 Cfa</div></div>
+      <div class="card"><div class="nm">Maffé poulet / Viande / Poisson</div><div class="pr">4 500 Cfa</div></div>
+      <div class="card"><div class="nm">Bouillon sauvage</div><div class="pr">4 000 / 7 000 Cfa</div></div>
+    </div>
+
+    <p class="sub-lbl" style="margin-top:18px">Riz &amp; Saveurs de Mer</p>
+    <div class="grid">
+      <div class="card"><div class="nm">Thiep poulet / Tiep viande</div><div class="pr">5 000 Cfa</div></div>
+      <div class="card"><div class="nm">Tiep poisson</div><div class="pr">5 000 Cfa</div></div>
+      <div class="card"><div class="nm">Poisson salé aux aubergines</div><div class="pr">4 500 Cfa</div></div>
+      <div class="card"><div class="nm">Riz Cantonné</div><div class="pr">4 000 Cfa</div></div>
+    </div>
+  </section>
+
+  <!-- BOISSONS & ACCOMPAGNEMENTS -->
+  <section class="menu-section" id="boissons">
+    <div class="sec-hd"><div class="dot"></div><h2>Accompagnements<br class="mobile-br">&amp; Boissons</h2><div class="ln"></div></div>
+    <div class="slist">
+      <div class="srow"><span class="nm">Riz / Manioc / Bananes</span><span class="pr">1 000 Cfa</span></div>
+      <div class="srow"><span class="nm">Saka Saka</span><span class="pr">2 000 / 4 000 Cfa</span></div>
+      <div class="srow"><span class="nm">Autres légumes</span><span class="pr">1 500 / 3 000 Cfa</span></div>
+      <div class="srow"><span class="nm">Jus</span><span class="pr">500 / 1 000 Cfa</span></div>
+      <div class="srow"><span class="nm">Yaourt</span><span class="pr">1 000 Cfa</span></div>
+      <div class="srow"><span class="nm">Eau</span><span class="pr">500 / 1 000 Cfa</span></div>
+      <div class="srow"><span class="nm">Bières</span><span class="pr">1 000 / 1 500 / 2 000 Cfa</span></div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ══════════════════════════════
+   FOOTER
+══════════════════════════════ -->
+<footer class="site-footer">
+
+  <!-- Marque -->
+  <div class="ft-brand">
+    <div class="name">O Menu Restaurant</div>
+    <div class="sub">Cuisine Afro-Urbaine · Brazzaville</div>
+  </div>
+
+  <div class="ft-sep"></div>
+
+  <!-- Vision -->
+  <div class="ft-vision">
+    <div class="v-title">
+      Bienvenue là où la cuisine africaine<br>
+      <span>rencontre l'âme urbaine.</span>
+    </div>
+    <p>Chez O Menu, vous n'êtes pas un simple client — <strong style="color:var(--cream);font-style:normal">vous êtes le Boss.</strong></p>
+    <p>Chaque plat est préparé avec amour, chaque saveur pensée pour vous emporter dans un voyage culinaire unique — celui des épices authentiques, des textures généreuses et des recettes qui parlent à l'âme.</p>
+    <p>Ici, on ne mange pas seulement. On partage, on sourit, on vit des instants qui restent gravés dans les mémoires. <strong style="color:var(--cream);font-style:normal">C'est ça, l'expérience O Menu.</strong></p>
+    <div class="v-slogan">
+      <div class="s1">Le goût. Le sourire. Le moment.</div>
+      <div class="s2">✦ Le voyage culinaire parfait ! ✦</div>
+    </div>
+  </div>
+
+  <!-- Infos pratiques en 3 colonnes -->
+  <div class="ft-info">
+
+    <div class="ft-col">
+      <span class="col-icon">📍</span>
+      <span class="col-title">Notre Adresse</span>
+      <p>
+        Avenue Sergent Malamine<br>
+        Centre-Ville de Brazzaville
+        <span class="ref-addr">En diagonale de l'Hôtel Vital<br>(ex-Restaurant Alwady)</span>
+      </p>
+    </div>
+
+    <div class="ft-col">
+      <span class="col-icon">🕐</span>
+      <span class="col-title">Horaires d'ouverture</span>
+      <p>
+        <strong style="color:var(--cream)">Mar – Sam</strong><br>
+        11h00 – 21h00<br><br>
+        <strong style="color:var(--cream)">Dimanche</strong><br>
+        12h30 – 21h00<br><br>
+        <strong style="color:var(--lgray)">Lundi</strong> — Fermé
+      </p>
+    </div>
+
+    <div class="ft-col">
+      <span class="col-icon">🛵</span>
+      <span class="col-title">Livraison</span>
+      <p>
+        Livraison <strong style="color:var(--cream)">rapide</strong> à vos meilleurs prix !<br><br>
+        Commandez et on vous livre directement chez vous.<br><br>
+        <a href="tel:+242067737037">📞 06 77 37 037</a><br>
+        <a href="/cdn-cgi/l/email-protection#d6b5beb3acb9bbb3b8a396b1bbb7bfbaf8b5b9bb"><span class="__cf_email__" data-cfemail="5f3c373a2530323a312a1f38323e3633713c3032">[email&#160;protected]</span></a>
+      </p>
+      <span class="highlight">🚀 Livraison rapide</span>
+    </div>
+
+  </div>
+
+  <!-- WhatsApp block -->
+  <div class="ft-wa-block">
+    <div class="wa-title">Passez votre commande maintenant</div>
+    <div class="wa-sub">Rapide, simple et livré directement chez vous.<br>Contactez-nous sur WhatsApp pour commander.</div>
+    <a href="https://wa.me/242067737037?text=Bonjour%20O%20Menu%20Restaurant%20Brazzaville%2C%20je%20souhaite%20commander%20un%20plat."
+       class="wa-btn lg" target="_blank" rel="noopener"
+       onclick="gtag('event','click_whatsapp',{'event_category':'engagement','event_label':'bouton_footer'});">
+      <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Commander sur WhatsApp
+    </a>
+  </div>
+
+  <!-- QR Code — à partager par les clients -->
+  <div class="ft-qr-block">
+    <div class="qr-wrap"><div id="qrcode"></div></div>
+    <div class="qr-text">
+      <h3>Partagez notre menu à vos proches !</h3>
+      <p>
+        Scannez ce QR code et envoyez-le à votre famille et vos amis.<br>
+        <strong>Ils accèdent directement à notre menu</strong> et peuvent commander en un clic.<br><br>
+        <span style="color:var(--or);font-size:11px;font-weight:600">📲 Partagez. Recommandez. Régalez !</span>
+      </p>
+    </div>
+  </div>
+
+  <div class="ft-copy">© 2025 O Menu Restaurant Brazzaville — Tous droits réservés</div>
+
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+/* ── QR Code ── */
+(function(){
+  var url = window.location.href.split('#')[0];
+  new QRCode(document.getElementById('qrcode'),{
+    text: url, width:140, height:140,
+    colorDark:'#111010', colorLight:'#ffffff',
+    correctLevel: QRCode.CorrectLevel.H
+  });
+})();
+
+/* ── Nav active au scroll ── */
+(function(){
+  var nav   = document.getElementById('sitenav');
+  var links = document.querySelectorAll('.nav-link');
+  var secs  = Array.from(document.querySelectorAll('.menu-section'));
+
+  function tick(){
+    var navH = nav.offsetHeight;
+    var cur  = secs[0].id;
+    secs.forEach(function(s){
+      if(s.getBoundingClientRect().top - navH - 8 <= 0) cur = s.id;
+    });
+    links.forEach(function(l){
+      var on = l.getAttribute('href') === '#'+cur;
+      if(on && !l.classList.contains('active')){
+        l.classList.add('active');
+        var lLeft = l.offsetLeft, lW = l.offsetWidth, navW = nav.offsetWidth;
+        nav.scrollLeft = lLeft - (na
